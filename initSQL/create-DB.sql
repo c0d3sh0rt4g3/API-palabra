@@ -14,7 +14,7 @@ CREATE TABLE Matches (
                          word VARCHAR(20),
                          matchScore INT,
                          max_tries INTEGER,
-                         currentTime TIMESTAMP
+                         currentTime INT
 );
 
 CREATE TABLE Word (
@@ -55,8 +55,8 @@ VALUES
 
 INSERT INTO Matches (word, matchScore, max_tries, currentTime)
 VALUES
-  ('example1', 1000, 3, CURRENT_TIMESTAMP),
-  ('example2', 1, 4, CURRENT_TIMESTAMP);
+  ('example1', 1000, 3, 2),
+  ('example2', 1, 4, 2);
 
 INSERT INTO Word (word)
 VALUES
