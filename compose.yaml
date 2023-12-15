@@ -5,7 +5,7 @@ services:
   db:
     image: mysql
     environment:
-      MYSQL_DATABASE: words-API
+      MYSQL_DATABASE: words-api
       MYSQL_ROOT_PASSWORD: Super
     volumes:
       - ./initSQL:/docker-entrypoint-initdb.d

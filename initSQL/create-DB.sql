@@ -1,9 +1,6 @@
-DROP TABLE IF EXISTS Game_Has_Word;
-DROP TABLE IF EXISTS Word;
-DROP TABLE IF EXISTS Player;
-DROP TABLE IF EXISTS `Match`;
-DROP TABLE IF EXISTS Team;
-DROP TABLE IF EXISTS Game;
+DROP DATABASE IF EXISTS `words-api`;
+CREATE DATABASE `words-api` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `words-api`;
 
 CREATE TABLE Team (
                       team_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -12,7 +9,7 @@ CREATE TABLE Team (
                       teamScore INT
 );
 
-CREATE TABLE `Match` (
+CREATE TABLE Matches (
                          match_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                          word VARCHAR(20),
                          matchScore INT,
@@ -47,7 +44,7 @@ CREATE TABLE Player (
                         pfp VARCHAR(100),
                         match_id INT NOT NULL,
                         team_id INT NOT NULL,
-                        FOREIGN KEY (match_id) REFERENCES `Match`(match_id),
+                        FOREIGN KEY (match_id) REFERENCES Matches(match_id),
                         FOREIGN KEY (team_id) REFERENCES Team(team_id)
 );
 
@@ -56,7 +53,7 @@ VALUES
   ('Team A', 'badge_a.png', 0),
   ('Team B', 'badge_b.png', 0);
 
-INSERT INTO `Match` (word, matchScore, max_tries, currentTime)
+INSERT INTO Matches (word, matchScore, max_tries, currentTime)
 VALUES
   ('example1', 1000, 3, CURRENT_TIMESTAMP),
   ('example2', 1, 4, CURRENT_TIMESTAMP);
@@ -88,10 +85,10 @@ VALUES
 UPDATE Player
 SET score = (
   SELECT COALESCE(SUM(matchScore), 0)
-  FROM `Match`
-  WHERE `Match`.match_id = Player.match_id
+  FROM Matches
+  WHERE Matches.match_id = Player.match_id
 )
-WHERE Player.player_id IN (SELECT DISTINCT player_id FROM `Match`);
+WHERE Player.player_id IN (SELECT DISTINCT player_id FROM Matches);
 
 -- Update Team table with the sum of player scores for each team
 UPDATE Team
