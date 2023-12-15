@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "Match", schema = "words-API")
-public class Match {
+@Table(name = "Partidas", schema = "words-api")
+public class Partidas {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int matchId;
@@ -21,5 +21,5 @@ public class Match {
     @Column
     private int maxTries;
     @Column
-    private Timestamp currentTime;
+    private Timestamp matchDate;
 }

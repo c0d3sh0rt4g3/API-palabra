@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Game_Has_Word", schema = "words-API")
+@Table(name = "Game_Has_Word", schema = "words-api")
 public class GameHasWord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

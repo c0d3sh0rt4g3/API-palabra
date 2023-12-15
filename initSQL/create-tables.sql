@@ -10,7 +10,7 @@ CREATE TABLE Partidas (
                          word VARCHAR(20),
                          matchScore INT,
                          max_tries INT,
-                         matchDate INT
+                         matchDate TIMESTAMP
 );
 
 CREATE TABLE Word (
@@ -50,8 +50,8 @@ VALUES
 
 INSERT INTO Partidas (word, matchScore, max_tries, matchDate)
 VALUES
-  ('example1', 1000, 3, 2),
-  ('example2', 1, 4, 2);
+  ('example1', 1000, 3, CURRENT_TIMESTAMP),
+  ('example2', 1, 4, CURRENT_TIMESTAMP);
 
 INSERT INTO Word (word)
 VALUES
