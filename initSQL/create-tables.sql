@@ -28,6 +28,7 @@ CREATE TABLE word (
 
 CREATE TABLE game (
                       game_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                      game_name VARCHAR(10),
                       difficulty VARCHAR(10) CHECK (difficulty IN ('Easy', 'Normal', 'Hard')),
                       description VARCHAR(255),
                       max_Tries INTEGER CHECK (max_Tries BETWEEN 0 AND 5)
@@ -70,10 +71,10 @@ VALUES
   ('grape'),
   ('strawberry');
 
-INSERT INTO game (difficulty, description, max_Tries)
+INSERT INTO game (game_name, difficulty, description, max_Tries)
 VALUES
-  ('Easy', 'Easy game description', 3),
-  ('Normal', 'Normal game description', 4);
+  ('Wordle','Easy', 'Easy game description', 3),
+  ('Hang man','Normal', 'Normal game description', 4);
 
 INSERT INTO game_has_word (game_id, word_id, word_difficulty)
 VALUES

@@ -16,6 +16,7 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int gameId;
+    private String gameName;
     private String difficulty;
     private String description;
     private int maxTries;
