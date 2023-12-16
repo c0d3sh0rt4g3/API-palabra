@@ -10,13 +10,13 @@ CREATE TABLE team (
                       team_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       team_name VARCHAR(20),
                       badge VARCHAR(50),
-                      teamScore INT
+                      team_score INT
 );
 
 CREATE TABLE matches (
                          match_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                          word VARCHAR(20),
-                         matchScore INT,
+                         match_score INT,
                          max_tries INT,
                          matchDate TIMESTAMP
 );
@@ -52,12 +52,12 @@ CREATE TABLE player (
                         FOREIGN KEY (match_id) REFERENCES matches(match_id),
                         FOREIGN KEY (team_id) REFERENCES team(team_id)
 );
-INSERT INTO team (team_name, badge, teamScore)
+INSERT INTO team (team_name, badge, team_score)
 VALUES
   ('team A', 'badge_a.png', 0),
   ('team B', 'badge_b.png', 0);
 
-INSERT INTO matches (word, matchScore, max_tries, matchDate)
+INSERT INTO matches (word, match_score, max_tries, matchDate)
 VALUES
   ('example1', 1000, 3, CURRENT_TIMESTAMP),
   ('example2', 1, 4, CURRENT_TIMESTAMP);
@@ -88,7 +88,7 @@ VALUES
 -- Update player table with the sum of match scores for each player
 UPDATE player
 SET score = (
-  SELECT COALESCE(SUM(matchScore), 0)
+  SELECT COALESCE(SUM(match_score), 0)
   FROM matches
   WHERE matches.match_id = player.match_id
 )
@@ -96,7 +96,7 @@ WHERE player.player_id IN (SELECT DISTINCT player_id FROM matches);
 
 -- Update team table with the sum of player scores for each team
 UPDATE team
-SET teamScore = (
+SET team_score = (
   SELECT SUM(score)
   FROM player
   WHERE player.team_id = team.team_id

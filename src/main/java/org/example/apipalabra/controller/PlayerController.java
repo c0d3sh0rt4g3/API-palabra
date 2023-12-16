@@ -44,7 +44,7 @@ public class PlayerController {
     }
 
     @PutMapping("/player/{id}")
-    private Player updatePlayer(@PathVariable Integer id, @RequestBody Player givenPlayer) {
+    public Player updatePlayer(@PathVariable Integer id, @RequestBody Player givenPlayer) {
         return playerRepository.findById(id)
                 .map(existingPlayer -> {
                     existingPlayer.setScore(0);
