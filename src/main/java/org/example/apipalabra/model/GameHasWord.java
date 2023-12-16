@@ -1,19 +1,20 @@
 package org.example.apipalabra.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "Game_Has_Word", schema = "words-api")
+@Builder
+@Table(name = "game_has_word")
 public class GameHasWord {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int gameId;
-    @Column
     private int wordId;
-    @Column
     private String wordDifficulty;
 }

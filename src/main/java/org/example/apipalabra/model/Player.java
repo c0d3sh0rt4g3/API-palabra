@@ -1,24 +1,24 @@
 package org.example.apipalabra.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "Player", schema = "words-api")
+@Builder
+@Table(name = "player")
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int playerId;
     private int score;
-    @Column
+    private String playerName;
     private String pfp;
-    @Column
     private int matchId;
-    @Column
     private int teamId;
 }

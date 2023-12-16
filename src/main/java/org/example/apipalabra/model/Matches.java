@@ -6,17 +6,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
-@Table(name = "game")
-public class Game {
+@Table(name = "matches")
+public class Matches {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int gameId;
-    private String difficulty;
-    private String description;
+    private int matchId;
+    private String word;
+    private int matchScore;
+    private String pfp;
     private int maxTries;
+    private Timestamp matchDate;
 }

@@ -1,11 +1,19 @@
-CREATE TABLE Team (
+-- Drop the tables
+DROP TABLE IF EXISTS player;
+DROP TABLE IF EXISTS game_has_word;
+DROP TABLE IF EXISTS matches;
+DROP TABLE IF EXISTS word;
+DROP TABLE IF EXISTS game;
+DROP TABLE IF EXISTS team;
+
+CREATE TABLE team (
                       team_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       team_name VARCHAR(20),
                       badge VARCHAR(50),
                       teamScore INT
 );
 
-CREATE TABLE Partidas (
+CREATE TABLE matches (
                          match_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                          word VARCHAR(20),
                          matchScore INT,
@@ -13,47 +21,48 @@ CREATE TABLE Partidas (
                          matchDate TIMESTAMP
 );
 
-CREATE TABLE Word (
+CREATE TABLE word (
                       word_id INT PRIMARY KEY AUTO_INCREMENT,
                       word VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE Game (
+CREATE TABLE game (
                       game_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
                       difficulty VARCHAR(10) CHECK (difficulty IN ('Easy', 'Normal', 'Hard')),
                       description VARCHAR(255),
                       max_Tries INTEGER CHECK (max_Tries BETWEEN 0 AND 5)
 );
 
-CREATE TABLE Game_Has_Word (
+CREATE TABLE game_has_word (
                            game_id INT NOT NULL,
                            word_id INT NOT NULL,
                            word_difficulty VARCHAR(10) CHECK (word_difficulty IN ('Easy', 'Normal', 'Hard')),
                            PRIMARY KEY (game_id, word_id),
-                           FOREIGN KEY (game_id) REFERENCES Game(game_id),
-                           FOREIGN KEY (word_id) REFERENCES Word(word_id)
+                           FOREIGN KEY (game_id) REFERENCES game(game_id),
+                           FOREIGN KEY (word_id) REFERENCES word(word_id)
 );
 
-CREATE TABLE Player (
+CREATE TABLE player (
                         player_id INT PRIMARY KEY AUTO_INCREMENT,
                         score INT,
+                        player_name VARCHAR(100),
                         pfp VARCHAR(100),
                         match_id INT NOT NULL,
                         team_id INT NOT NULL,
-                        FOREIGN KEY (match_id) REFERENCES Partidas(match_id),
-                        FOREIGN KEY (team_id) REFERENCES Team(team_id)
+                        FOREIGN KEY (match_id) REFERENCES matches(match_id),
+                        FOREIGN KEY (team_id) REFERENCES team(team_id)
 );
-INSERT INTO Team (team_name, badge, teamScore)
+INSERT INTO team (team_name, badge, teamScore)
 VALUES
-  ('Team A', 'badge_a.png', 0),
-  ('Team B', 'badge_b.png', 0);
+  ('team A', 'badge_a.png', 0),
+  ('team B', 'badge_b.png', 0);
 
-INSERT INTO Partidas (word, matchScore, max_tries, matchDate)
+INSERT INTO matches (word, matchScore, max_tries, matchDate)
 VALUES
   ('example1', 1000, 3, CURRENT_TIMESTAMP),
   ('example2', 1, 4, CURRENT_TIMESTAMP);
 
-INSERT INTO Word (word)
+INSERT INTO word (word)
 VALUES
   ('apple'),
   ('banana'),
@@ -61,35 +70,35 @@ VALUES
   ('grape'),
   ('strawberry');
 
-INSERT INTO Game (difficulty, description, max_Tries)
+INSERT INTO game (difficulty, description, max_Tries)
 VALUES
   ('Easy', 'Easy game description', 3),
   ('Normal', 'Normal game description', 4);
 
-INSERT INTO Game_Has_Word (game_id, word_id, word_difficulty)
+INSERT INTO game_has_word (game_id, word_id, word_difficulty)
 VALUES
   (1, 1, 'Easy'),
   (2, 2, 'Normal');
 
-INSERT INTO Player (score, pfp, match_id, team_id)
+INSERT INTO player (score, player_name, pfp, match_id, team_id)
 VALUES
-  (0, 'player1.png', 1, 1),
-  (0, 'player2.png', 2, 2);
+  (0, 'player1', 'player1.png', 1, 1),
+  (0, 'player2', 'player2.png', 2, 2);
 
--- Update Player table with the sum of match scores for each player
-UPDATE Player
+-- Update player table with the sum of match scores for each player
+UPDATE player
 SET score = (
   SELECT COALESCE(SUM(matchScore), 0)
-  FROM Partidas
-  WHERE Partidas.match_id = Player.match_id
+  FROM matches
+  WHERE matches.match_id = player.match_id
 )
-WHERE Player.player_id IN (SELECT DISTINCT player_id FROM Partidas);
+WHERE player.player_id IN (SELECT DISTINCT player_id FROM matches);
 
--- Update Team table with the sum of player scores for each team
-UPDATE Team
+-- Update team table with the sum of player scores for each team
+UPDATE team
 SET teamScore = (
   SELECT SUM(score)
-  FROM Player
-  WHERE Player.team_id = Team.team_id
+  FROM player
+  WHERE player.team_id = team.team_id
 )
-WHERE Team.team_id IN (SELECT DISTINCT team_id FROM Player);
+WHERE team.team_id IN (SELECT DISTINCT team_id FROM player);
