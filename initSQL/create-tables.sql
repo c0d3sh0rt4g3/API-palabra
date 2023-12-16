@@ -18,7 +18,7 @@ CREATE TABLE matches (
                          word VARCHAR(20),
                          match_score INT,
                          max_tries INT,
-                         matchDate TIMESTAMP
+                         match_date TIMESTAMP
 );
 
 CREATE TABLE word (
@@ -57,7 +57,7 @@ VALUES
   ('team A', 'badge_a.png', 0),
   ('team B', 'badge_b.png', 0);
 
-INSERT INTO matches (word, match_score, max_tries, matchDate)
+INSERT INTO matches (word, match_score, max_tries, match_date)
 VALUES
   ('example1', 1000, 3, CURRENT_TIMESTAMP),
   ('example2', 1, 4, CURRENT_TIMESTAMP);

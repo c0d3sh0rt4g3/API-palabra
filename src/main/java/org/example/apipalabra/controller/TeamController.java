@@ -1,7 +1,6 @@
 package org.example.apipalabra.controller;
 
 import org.example.apipalabra.exceptions.NotFoundException;
-import org.example.apipalabra.model.Player;
 import org.example.apipalabra.model.Team;
 import org.example.apipalabra.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
