@@ -20,7 +20,6 @@ public class Matches {
     private int matchId;
     private String word;
     private int matchScore;
-    private String pfp;
     private int maxTries;
     private Timestamp matchDate;
 }
