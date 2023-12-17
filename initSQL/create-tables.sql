@@ -44,15 +44,16 @@ CREATE TABLE game_has_word (
 );
 
 CREATE TABLE player (
-                        player_id INT PRIMARY KEY AUTO_INCREMENT,
-                        score INT,
-                        player_name VARCHAR(100),
-                        pfp VARCHAR(100),
-                        match_id INT NOT NULL,
-                        team_id INT NOT NULL,
-                        FOREIGN KEY (match_id) REFERENCES matches(match_id),
-                        FOREIGN KEY (team_id) REFERENCES team(team_id)
+    player_id INT PRIMARY KEY AUTO_INCREMENT,
+    score INT,
+    player_name VARCHAR(100),
+    pfp VARCHAR(100),
+    match_id INT NOT NULL,
+    team_id INT NOT NULL,
+    FOREIGN KEY (match_id) REFERENCES matches(match_id),
+    FOREIGN KEY (team_id) REFERENCES team(team_id) ON DELETE CASCADE
 );
+
 INSERT INTO team (team_name, badge, team_score)
 VALUES
   ('team A', 'badge_a.png', 0),
