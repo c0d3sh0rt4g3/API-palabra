@@ -1,5 +1,6 @@
 package org.example.apipalabra.controller;
 
+
 import org.example.apipalabra.exceptions.NotFoundException;
 import org.example.apipalabra.model.Word;
 import org.example.apipalabra.repository.WordRepository;
